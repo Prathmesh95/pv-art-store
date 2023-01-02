@@ -1,0 +1,413 @@
+{% load static %} {% static "images" as baseUrl %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PV Art Store</title>
+    <link rel="icon" href="{% static 'images/logo.png' %}">
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body >
+
+
+
+
+
+
+
+<!-- header section starts  -->
+
+<header>
+
+    <input type="checkbox" name="" id="toggler">
+    <label for="toggler" class="fas fa-bars"></label>
+
+    <a href="#" class="logo">Evolving Art Market<span></span></a>
+
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#about">about</a>
+        <a href="#contact">contact</a>
+         {% if request.user.is_authenticated %}
+        <a href="n1">product</a>
+        {% endif %}
+
+
+    </nav>
+
+
+
+    </div>
+
+
+
+
+
+    {% if user.is_authenticated %}
+<ul class="navbar-nav mr-2">
+<li class="nav-item dropdown">
+<h2><a class="nav-link dropdown-toggle" href='#' id="navbarDropdown" role="button" data-toggle="dropdown"> Welcome {{request.user}}</a></h2>
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/logout">Logout</a>
+
+        </div>
+      </li>
+      </ul>
+      </div>
+{% else %}
+  <!-- Button to  trigger Login modal -->
+<button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#loginModal">
+Login
+</button>
+
+<button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#signupModal">
+SignUp
+</button>
+{% endif %}
+
+
+        </div>
+      </nav>
+      {% for message in messages  %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong> {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+      {% endfor %}
+
+
+
+
+
+<!-- SignUp Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="signupModalTitle">SignUp Here</h1>
+          <h5> <input  type="button" value="close" data-dismiss="modal" class="btn"></h5>
+
+      </div>
+      <div class="modal-body">
+        <form action= "/signup" method='post'>
+  <div class="form-group">
+   <h2> <label for="username">Username</label></h2>
+    <input type="text" class="form-control" id="username" name="username" placeholder="Choose a unique username" required>
+  </div>
+  <div class="form-group">
+   <h2> <label for="fname">First Name</label></h2>
+    <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name" required>
+  </div>
+  <div class="form-group">
+      <h2><label for="lname">Last Name</label></h2>
+    <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Your Last Name" required>
+  </div>
+  <div class="form-group">
+   <h2> <label for="email">Email address</label></h2>
+    <input type="text" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+  </div>
+  <div class="form-group">
+   <h2> <label for="pass1">Choose a password</label></h2>
+    <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Choose Your Password" required>
+  </div>
+  <div class="form-group">
+   <h2> <label for="pass2">Confirm Password</label></h2>
+    <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Enter your password again" required>
+  </div>
+
+
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+      {% block body %}  {% endblock body %}
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="loginModalTitle">Login Here</h1>
+          <h5> <input  type="button" value="close" data-dismiss="modal" class="btn"></h5>
+
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/login" method="POST"> {% csrf_token %}
+  <div class="form-group">
+      <h2><label for="username">Username</label></h2>
+    <input type="text" class="form-control" id="loginusername" name="loginusername" placeholder="Enter your username "required>
+  </div>
+  <div class="form-group">
+   <h2><label text="pass">Enter your password </label></h2>
+    <input type="password" class="form-control" id="loginpassword" name="loginpassword" placeholder="Enter your password "required>
+  </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+      </div>
+       <div class="modal-footer">
+      </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    </div>
+  </div>
+</div>
+</header>
+</body>
+</html>
+
+
+
+
+
+</header>
+
+<!-- header section ends -->
+
+<!-- home section starts  -->
+
+<section class="home" id="home">
+
+    <div class="content">
+
+        <h3 style="color:black">   PV Art Store </h3>
+        <span style="color:black">... Exclusive Collection of Art Tools ...</span>
+        <p></p>
+
+    </div>
+</section>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 15%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 90%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: left;
+  right: 5px;
+  top: 0;
+  color: #000;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)}
+  to {-webkit-transform: scale(1)}
+}
+
+@keyframes animatezoom {
+  from {transform: scale(0)}
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+</head>
+<!-- home section ends -->
+
+<!-- about section starts  -->
+
+<section class="about" id="about">
+
+    <h1 class="heading"> <span style="color:purple"> about </span> us </h1>
+
+    <div class="row">
+
+        <div class="video-container">
+            <video src="{% static 'images/about-vid.mp4'%}" loop autoplay muted></video>
+            <h3>best art material suppliers</h3>
+        </div>
+
+        <div class="content">
+            <h3>About Us</h3>
+            <p>Founded in the year 2000, Artzo India (Formerly known as Art Materials, Bangalore) aims to nurture the artisitc spirit in aspiring artists by providing a vast range of quality art, craft & hobby supplies for professionals & hobbyists alike.
+
+</p>
+            <p>We adopt a knowledge driven approach, ensuring that you get the appropriate products to achieve your creative goals."</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- about section ends -->
+
+<section class="contact" id="contact">
+
+    <h1 class="heading"> <span> contact </span> us </h1>
+
+    <div class="row">
+
+        <form method="POST" action="/Contact">
+        {% csrf_token %}
+            <input type="text" name="name" placeholder="name" class="box">
+            <input type="email" name="email" placeholder="email" class="box">
+            <input type="text" name="subject" placeholder="subject" class="box">
+            <textarea type="text" name="message" class="box" placeholder="message" id="" cols="30" rows="10"></textarea>
+            <input style="#contact" type="submit" value="send message" class="btn">
+        </form>
+
+        <div class="image">
+            <img src="{% static 'images/contact-img.jpg' %}" alt="">
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+<!-- footer section starts  -->
+
+<section class="footer">
+
+        <div class="box">
+            <h3>contact info</h3>
+            <a href="#">7894561230</a>
+            <a href="#">pvarts@gmail.com</a>
+            <a href="#">Pune, india - 412110</a>
+            <img src="{% static 'images/payment.png'%}" alt="">
+        </div>
+
+    </div>
+
+    <div class="credit"> created by <span style="color:purple"> Prathmesh Vedpathak </span> | all rights reserved </div>
+
+</section>
+
+<!-- footer section ends -->
+
+</body>
+</html>
